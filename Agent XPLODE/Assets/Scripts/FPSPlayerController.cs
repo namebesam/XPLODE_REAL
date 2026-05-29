@@ -6,6 +6,7 @@ public class FPSPlayerController : MonoBehaviour
     //movement speed and player orientation
     public float moveSpeed;
     public Transform orientation;
+    public Transform playerObj;
 
     //basic movement variables
     float horizontalInput;
@@ -69,7 +70,7 @@ public class FPSPlayerController : MonoBehaviour
 
     private void MovePlayer()
     {
-        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        moveDirection = playerObj.forward * verticalInput + playerObj.right * horizontalInput;
 
         if (grounded)
         {
