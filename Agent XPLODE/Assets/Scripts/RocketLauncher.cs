@@ -11,6 +11,9 @@ public class RocketLauncher : MonoBehaviour
     Rigidbody rb;
     Rigidbody rocketRb;
 
+    public Animator rocketRecoilAnim;
+    public GameObject muzzleExplosionPrefab; //for the muzzle flash
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -30,6 +33,7 @@ public class RocketLauncher : MonoBehaviour
     {
         //spawn rocket prefab at tip and make a local object
         GameObject rocketToLaunch = Instantiate(rocketPrefab, firePoint.position, firePoint.rotation);
+        Instantiate(muzzleExplosionPrefab, firePoint.position, firePoint.rotation);
 
         //send said local object flying forward
         rocketRb = rocketToLaunch.GetComponent<Rigidbody>();
@@ -38,5 +42,10 @@ public class RocketLauncher : MonoBehaviour
         //Push player in the opposite direction (cheap solution for now, may make more strictly physics-based later
         //documentation pull, -(direction vector) should just send the force in the exact opposite direction
         rb.AddForce(-firePoint.forward * launchForce, ForceMode.Impulse); //definitely keep impulse for now
+
+        //play recoil animation
+        rocketRecoilAnim.SetTrigger("RPGFire");
+
+
     }
 }
