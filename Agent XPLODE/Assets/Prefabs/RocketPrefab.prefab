@@ -22,11 +22,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ed272e0aaff0a554b9d11d19cf32a01a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -2.0270586
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ed272e0aaff0a554b9d11d19cf32a01a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 3.448338
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ed272e0aaff0a554b9d11d19cf32a01a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -96,7 +96,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
 --- !u!96 &1160975583095182982
 TrailRenderer:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -115,6 +115,8 @@ TrailRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -136,9 +138,11 @@ TrailRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_Time: 5
   m_PreviewTimeScale: 1
   m_Parameters:
@@ -197,7 +201,6 @@ TrailRenderer:
     shadowBias: 0.5
     generateLightingData: 0
   m_MinVertexDistance: 0.1
-  m_MaskInteraction: 0
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
@@ -208,10 +211,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2214757989559941362}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -262,3 +265,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionEffect: {fileID: 2612404059399816833, guid: 29790b7c4dcdaa449883253b3f179065, type: 3}
+  explosionHitSFX: {fileID: 8300000, guid: a4f6170476b91214eb25d99a799598f5, type: 3}
+  explosionForce: 10
+  forceMode: 1
+  explosionRadius: 3
+  upwardsModifier: 0
+  affectPlayer: 1
