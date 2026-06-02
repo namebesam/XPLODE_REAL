@@ -17,6 +17,7 @@ public class FPSPlayerController : MonoBehaviour
     public LayerMask whatIsGround;
     public float groundDistance = 0.4f;
     public float groundDrag;
+    public float airDrag;
     bool grounded;
 
     //jump variables
@@ -135,7 +136,7 @@ public class FPSPlayerController : MonoBehaviour
 
         else
         {
-            rb.linearDamping = 0;
+            rb.linearDamping = airDrag;
         }
     }
 
