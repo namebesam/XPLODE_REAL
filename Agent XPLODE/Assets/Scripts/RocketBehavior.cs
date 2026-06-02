@@ -31,13 +31,13 @@ public class RocketBehavior : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Rocket collision");
+        // Debug.Log("Rocket collision");
         Explode();
     }
 
     void Explode()
     {
-        Debug.Log("Exploding");
+        // Debug.Log("Exploding");
         Instantiate(explosionEffect, transform.position, transform.rotation);
         AudioSource.PlayClipAtPoint(explosionHitSFX, transform.position);
 
@@ -50,6 +50,7 @@ public class RocketBehavior : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(explosionPos, explosionRadius);
         foreach (Collider collider in colliders)
         {
+            if (collider.gameObject == gameObject) {continue;}
             Rigidbody rb = collider.GetComponent<Rigidbody>();
             if (!rb)
             {
@@ -59,7 +60,7 @@ public class RocketBehavior : MonoBehaviour
                 }
             }
             if (!rb) {continue;}
-            Debug.Log("Rigidbody: " + rb);
+            // Debug.Log("Rigidbody: " + rb);
 
             rb.AddExplosionForce(explosionForce, explosionPos,
                 explosionRadius, upwardsModifier, forceMode);
