@@ -8,6 +8,9 @@ public class RocketLauncher : MonoBehaviour
     public float rocketForce = 50f; //force on the outward rocket
     public float launchForce = 20f; //inward force on the player
 
+    public float rocketCooldown = 0.8f; // can lower and make the animation faster
+    float cooldownTimer = 0;
+
     Rigidbody rb;
     Rigidbody rocketRb;
 
@@ -25,8 +28,13 @@ public class RocketLauncher : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            FireRocket();
+            if (cooldownTimer <= 0)
+            {
+                FireRocket();
+                cooldownTimer = rocketCooldown;
+            }
         }
+        cooldownTimer -= Time.deltaTime;
     }
 
     void FireRocket()
