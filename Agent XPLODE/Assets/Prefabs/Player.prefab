@@ -804,6 +804,7 @@ MonoBehaviour:
   rocketPrefab: {fileID: 2214757989559941362, guid: 8d1b4808c27c41d43b34118a6f88c61d, type: 3}
   rocketForce: 50
   launchForce: 20
+  rocketCooldown: 0.8
   rocketRecoilAnim: {fileID: 1220344129090215657}
   muzzleExplosionPrefab: {fileID: 7789759112137344800, guid: 5eb338ebd42dac040879b0e84d514368, type: 3}
 --- !u!1001 &8382895574142879910

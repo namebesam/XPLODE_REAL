@@ -8,7 +8,7 @@ public class RocketLauncher : MonoBehaviour
     public float rocketForce = 50f; //force on the outward rocket
     public float launchForce = 20f; //inward force on the player
 
-    public float rocketCooldown = 1.5f; // can lower and make the animation faster
+    public float rocketCooldown = 0.8f; // can lower and make the animation faster
     float cooldownTimer = 0;
 
     Rigidbody rb;
