@@ -63,7 +63,7 @@ public class RocketBehavior : MonoBehaviour
             {
                 if (affectsPlayer)
                 {
-                    Transform parent = collider.GetComponentInParent<Transform>().parent;
+                    Transform parent = collider.GetComponent<Transform>().parent;
                     if (parent && parent.CompareTag("Player"))
                     {
                         // Debug.Log("Player");
