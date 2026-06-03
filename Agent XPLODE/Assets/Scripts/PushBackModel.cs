@@ -31,14 +31,14 @@ public class PushBackModel : MonoBehaviour
         bool hit = Physics.Raycast(startPos, startTransform.forward, out hitInfo, lengthFromStart);
         if (hit)
         {
-            Debug.Log("Model: collides with " + hitInfo.collider.name);
+            // Debug.Log("Model: collides with " + hitInfo.collider.name);
             float pushDistance = Mathf.Min(lengthFromStart - hitInfo.distance, maxPushBackDistance);
-            Debug.Log("Pushback: Hit: " + pushDistance);
+            // Debug.Log("Pushback: Hit: " + pushDistance);
             goalOffset = startOffset + Vector3.forward * -pushDistance;
         }
         else
         {
-            Debug.Log("Pushback: NoHit");
+            // Debug.Log("Pushback: NoHit");
             goalOffset = startOffset;
         }
 
@@ -46,8 +46,8 @@ public class PushBackModel : MonoBehaviour
 
         Vector3 next = Vector3.MoveTowards(currentOffset, goalOffset, speed * Time.deltaTime);
         modelTransform.localPosition = next;
-        Debug.Log("Pushback: goalOffset = " + goalOffset + " transform = " + holderTransform.localPosition
-            + " speed = " + speed + " dt = " + Time.deltaTime);
+        // Debug.Log("Pushback: goalOffset = " + goalOffset + " transform = " + holderTransform.localPosition
+        //     + " speed = " + speed + " dt = " + Time.deltaTime);
         currentOffset = next;
     }
 }

@@ -32,6 +32,12 @@ public class RocketBehavior : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log("Rocket collision");
+
+        // Check collision
+        if (collision.gameObject.GetComponent<RocketBehavior>()) // do not explode on same projectile
+        {
+            return;
+        }
         Explode();
     }
 
