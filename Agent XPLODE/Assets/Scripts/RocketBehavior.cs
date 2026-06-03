@@ -11,11 +11,11 @@ public class RocketBehavior : MonoBehaviour
     public AudioClip explosionHitSFX;
 
     [Header("Explosion Physics")]
-    public float explosionForce = 10f;
+    public float explosionForce = 30f;
     public ForceMode forceMode = ForceMode.Impulse;
-    public float explosionRadius = 3f; // gets weaker the further out
-    public float upwardsModifier = 0f; // how many meters to shift the y pos of force down by
-    public bool affectPlayer = true;
+    public float explosionRadius = 6f; // gets weaker the further out
+    public float upwardsModifier = 1f; // how many meters to shift the y pos of force down by
+    public bool affectsPlayer = true;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -31,13 +31,13 @@ public class RocketBehavior : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        // Debug.Log("Rocket collision");
+        Debug.Log("Rocket collision");
         Explode();
     }
 
     void Explode()
     {
-        // Debug.Log("Exploding");
+        Debug.Log("Rocket exploding");
         Instantiate(explosionEffect, transform.position, transform.rotation);
         AudioSource.PlayClipAtPoint(explosionHitSFX, transform.position);
 
@@ -50,17 +50,23 @@ public class RocketBehavior : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(explosionPos, explosionRadius);
         foreach (Collider collider in colliders)
         {
+            // Debug.Log("Collider: " + collider.name);
             if (collider.gameObject == gameObject) {continue;}
             Rigidbody rb = collider.GetComponent<Rigidbody>();
             if (!rb)
             {
-                if (affectPlayer && collider.CompareTag("Player"))
+                if (affectsPlayer)
                 {
-                    rb = collider.GetComponentInParent<Rigidbody>();
+                    Transform parent = collider.GetComponentInParent<Transform>().parent;
+                    if (parent && parent.CompareTag("Player"))
+                    {
+                        // Debug.Log("Player");
+                        rb = parent.GetComponent<Rigidbody>();
+                    }
                 }
             }
             if (!rb) {continue;}
-            // Debug.Log("Rigidbody: " + rb);
+            Debug.Log("Explosion hit rigidbody: " + rb);
 
             rb.AddExplosionForce(explosionForce, explosionPos,
                 explosionRadius, upwardsModifier, forceMode);

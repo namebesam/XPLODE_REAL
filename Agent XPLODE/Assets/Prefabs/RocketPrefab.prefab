@@ -264,10 +264,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0363979348422b14b945ebabc937bb1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lifetime: 5
   explosionEffect: {fileID: 2612404059399816833, guid: 29790b7c4dcdaa449883253b3f179065, type: 3}
   explosionHitSFX: {fileID: 8300000, guid: a4f6170476b91214eb25d99a799598f5, type: 3}
-  explosionForce: 10
+  explosionForce: 20
   forceMode: 1
-  explosionRadius: 3
-  upwardsModifier: 0
-  affectPlayer: 1
+  explosionRadius: 4
+  upwardsModifier: 1
+  affectsPlayer: 1
