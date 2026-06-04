@@ -152,12 +152,12 @@ public class DroneEnemyBehavior : MonoBehaviour
 
         if (distanceTo <= escapeRange)
         {
-            Vector3 targetDir = Vector3.Normalize(targetPos - transform.position);
-            transform.localRotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetDir), rotationSpeed * Time.fixedDeltaTime);
+            Vector3 targetDir = GetDirectionTo(targetPos);
+            LookInDirectionSmoothly(targetDir);
 
             if (distanceTo > followRange)
             {
-                rb.AddForce(targetDir * movementForce * Time.fixedDeltaTime);
+                AddForceInDirection(targetDir, movementForce);
             }
 
             if (fireCoolDown <= 0)
