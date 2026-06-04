@@ -142,7 +142,7 @@ GameObject:
   - component: {fileID: 487116082669563925}
   m_Layer: 0
   m_Name: PlayerObj
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -598,6 +598,7 @@ GameObject:
   - component: {fileID: 6437440141593055428}
   - component: {fileID: 1837347653907028242}
   - component: {fileID: 736100326643170922}
+  - component: {fileID: 7420454732433710118}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -807,6 +808,20 @@ MonoBehaviour:
   rocketCooldown: 0.8
   rocketRecoilAnim: {fileID: 1220344129090215657}
   muzzleExplosionPrefab: {fileID: 7789759112137344800, guid: 5eb338ebd42dac040879b0e84d514368, type: 3}
+--- !u!114 &7420454732433710118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8408968612836604153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11043b06dc7c5e94ca9dce2aef7606c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GeneralHealth
+  health: 100
+  isAlive: 1
 --- !u!1001 &8382895574142879910
 PrefabInstance:
   m_ObjectHideFlags: 0
