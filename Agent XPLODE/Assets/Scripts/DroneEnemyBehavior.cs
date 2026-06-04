@@ -15,6 +15,10 @@ public class DroneEnemyBehavior : MonoBehaviour
     public float movementForce = 75f;
     public float rotationSpeed = 10f;
 
+    [Header("Roam Settings")]
+    public Vector3 surveyPosition1;
+    public Vector3 surveyPosition2;
+
     [Header("Attack Settings")]
     public float detectiopRange = 10f;
     public float followRange = 5f;
@@ -31,12 +35,14 @@ public class DroneEnemyBehavior : MonoBehaviour
     private Rigidbody rb;
     private float fireCoolDown;
     private bool IsEnabled = true;
+    private Vector3 roamTargetPosition;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         state = DroneState.Patrolling;
         health = GetComponent<GeneralHealth>();
+        roamTargetPosition = surveyPosition2;
     }
 
     // Update is called once per frame
@@ -53,6 +59,7 @@ public class DroneEnemyBehavior : MonoBehaviour
             switch (state)
             {
                 case DroneState.Patrolling:
+                    DoRoamIfPossible();
                     CheckForPlayer();
                     break;
                 case DroneState.Hunting:
@@ -79,6 +86,63 @@ public class DroneEnemyBehavior : MonoBehaviour
                 state = DroneState.Hunting;
             }
         }
+    }
+
+    void DoRoamIfPossible()
+    {
+        if (surveyPosition1 != null && surveyPosition2 != null)
+        {
+            Vector3 directionTo = GetDirectionTo(roamTargetPosition);
+            if (IsLookingInDirection(directionTo))
+            {
+                AddForceInDirection(directionTo, movementForce);
+            }
+            LookInDirectionSmoothly(directionTo);
+
+            float distanceTo = Vector3.Distance(roamTargetPosition, transform.position);
+            if (distanceTo <= 0.05)
+            {
+                SwitchRoamTarget();
+            }
+        }
+    }
+
+    private void SwitchRoamTarget()
+    {
+        if (roamTargetPosition == surveyPosition1)
+        {
+            roamTargetPosition = surveyPosition2;
+        } else
+        {
+            roamTargetPosition = surveyPosition1;
+        }
+    }
+
+    private Vector3 GetDirectionTo(Vector3 pos)
+    {
+        return (pos - transform.position).normalized;
+    }
+
+    private void AddForceInDirection(Vector3 dir, float magnitude)
+    {
+        rb.AddForce(dir * magnitude * Time.fixedDeltaTime);
+    }
+
+    private void LookInDirectionSmoothly(Vector3 dir)
+    {
+        Quaternion lookRot = Quaternion.LookRotation(dir);
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, lookRot, rotationSpeed * Time.fixedDeltaTime);
+    }
+
+    private bool IsLookingInDirection(Vector3 dir)
+    {
+        Quaternion lookRot = Quaternion.LookRotation(dir);
+        float difference = Vector3.Distance(lookRot.eulerAngles, transform.rotation.eulerAngles);
+        if (difference >= 10)
+        {
+            return false;
+        }
+        return true;
     }
 
     void AttackPlayer()
