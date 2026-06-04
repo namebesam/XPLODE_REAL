@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class RocketBehavior : MonoBehaviour
@@ -5,6 +6,7 @@ public class RocketBehavior : MonoBehaviour
     [Header("General Settings")]
     // public float damage = 50f;
     public float lifetime = 5f;
+    public int rocketDamage = 100;
 
     [Header("Explosion Effects")]
     public GameObject explosionEffect;
@@ -74,9 +76,40 @@ public class RocketBehavior : MonoBehaviour
             if (!rb) {continue;}
             Debug.Log("Explosion hit rigidbody: " + rb);
 
+            DamageEntitiesNearby(rb);
+
             rb.AddExplosionForce(explosionForce, explosionPos,
                 explosionRadius, upwardsModifier, forceMode);
         }
+    }
+
+    private void DamageEntitiesNearby(Rigidbody rb)
+    {
+        
+        if (rb.CompareTag("Enemy"))
+        {
+            // checks both parent and rb owner for health script for now
+            var script = rb.GetComponentInParent<GeneralHealth>();
+            if (!script)
+            {
+                script = rb.GetComponent<GeneralHealth>();
+            }
+
+            if (script)
+            {
+                int dmg = SplashDamage(rb.transform);
+                script.TakeDamage(dmg);
+            }
+        }
+    }
+
+    private int SplashDamage(Transform target)
+    {
+        float distanceTo = Vector3.Distance(target.position, transform.position);
+        int damage = Mathf.FloorToInt((1 - (distanceTo / explosionRadius)) * rocketDamage);
+        if (damage < 0 )
+            damage = 0;
+        return damage;
     }
 
     void OnDrawGizmosSelected()
