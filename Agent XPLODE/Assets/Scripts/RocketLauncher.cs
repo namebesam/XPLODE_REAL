@@ -17,6 +17,8 @@ public class RocketLauncher : MonoBehaviour
     public Animator rocketRecoilAnim;
     public GameObject muzzleExplosionPrefab; //for the muzzle flash
 
+    public AudioSource rocketLaunchSFX;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -42,6 +44,9 @@ public class RocketLauncher : MonoBehaviour
         //spawn rocket prefab at tip and make a local object
         GameObject rocketToLaunch = Instantiate(rocketPrefab, firePoint.position, firePoint.rotation);
         Instantiate(muzzleExplosionPrefab, firePoint.position, firePoint.rotation);
+
+        //Play sound effect
+        rocketLaunchSFX.Play();
 
         //send said local object flying forward
         rocketRb = rocketToLaunch.GetComponent<Rigidbody>();
