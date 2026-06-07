@@ -10,13 +10,8 @@ public class DroneBullet : MonoBehaviour
         Destroy(gameObject, 3);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    void OnTriggerEnter(Collider collider)
+    /* WILL BRING BACK AT SOME POINT SINCE IT'S MODULAR, FOR FP2 THO THERE'S AN IMPLEMENTATION ON PLAYER ALREADY
+     * void OnTriggerEnter(Collider collider)
     {
         if (collider.transform.CompareTag("Player"))
         {
@@ -24,9 +19,19 @@ public class DroneBullet : MonoBehaviour
             if (health)
             {
                 health.TakeDamage(bulletDamage);
+                if (health.isAlive == false)
+                {
+
+                }
             }
             Destroy(gameObject);
         }
+    }
+     */
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Destroy(gameObject);
     }
 
     public void FireAway(Vector3 force, Quaternion initialRotation)

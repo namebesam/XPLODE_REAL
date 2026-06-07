@@ -12,12 +12,6 @@ public class GeneralHealth : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void TakeDamage(int dmg)
     {
         if (dmg < 0)

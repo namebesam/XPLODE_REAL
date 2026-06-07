@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class RocketLauncher : MonoBehaviour
 {
@@ -19,10 +20,20 @@ public class RocketLauncher : MonoBehaviour
 
     public AudioSource rocketLaunchSFX;
 
+    //limited rockets system
+    public int startingRockets = 25;
+    public int currentRockets;
+    public bool outOfRockets = false;
+    public TMP_Text rocketText;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        rb = GetComponent<Rigidbody>(); 
+        rb = GetComponent<Rigidbody>();
+
+        currentRockets = startingRockets;
+        rocketText.text = currentRockets.ToString();
     }
 
     // Update is called once per frame
@@ -30,10 +41,15 @@ public class RocketLauncher : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            if (cooldownTimer <= 0)
+            if (cooldownTimer <= 0 && currentRockets > 0)
             {
                 FireRocket();
                 cooldownTimer = rocketCooldown;
+            }
+
+            if(currentRockets <= 0)
+            {
+                outOfRockets = true;
             }
         }
         cooldownTimer -= Time.deltaTime;
@@ -41,6 +57,13 @@ public class RocketLauncher : MonoBehaviour
 
     void FireRocket()
     {
+        if(currentRockets > 0)
+        {
+            currentRockets--;
+            rocketText.text = currentRockets.ToString();
+        }
+        
+
         //spawn rocket prefab at tip and make a local object
         GameObject rocketToLaunch = Instantiate(rocketPrefab, firePoint.position, firePoint.rotation);
         Instantiate(muzzleExplosionPrefab, firePoint.position, firePoint.rotation);
@@ -58,7 +81,5 @@ public class RocketLauncher : MonoBehaviour
 
         //play recoil animation
         rocketRecoilAnim.SetTrigger("RPGFire");
-
-
     }
 }

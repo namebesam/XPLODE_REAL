@@ -36,6 +36,13 @@ public class DroneEnemyBehavior : MonoBehaviour
     private float fireCoolDown;
     private bool IsEnabled = true;
     private Vector3 roamTargetPosition;
+
+    public GameObject deathVFX;
+    public AudioClip deathSFX;
+
+    public AudioSource whirringSFX;
+    public AudioClip shootSFX;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -43,6 +50,10 @@ public class DroneEnemyBehavior : MonoBehaviour
         state = DroneState.Patrolling;
         health = GetComponent<GeneralHealth>();
         roamTargetPosition = surveyPosition2;
+
+        whirringSFX.Play();
+
+        health.isAlive = true;
     }
 
     // Update is called once per frame
@@ -177,7 +188,8 @@ public class DroneEnemyBehavior : MonoBehaviour
     void ShootProjectile(Vector3 targetDirection)
     {
         var bullet = Instantiate(projectilePrefab, barrelPoint.transform.position, Quaternion.identity);
-        
+        AudioSource.PlayClipAtPoint(shootSFX, transform.position, 1f);
+
         DroneBullet script = bullet.GetComponentInChildren<DroneBullet>();
         if (script)
         {
@@ -185,9 +197,26 @@ public class DroneEnemyBehavior : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Rocket"))
+        {
+            health.TakeDamage(50); //eventually adjust to custom value on rocket
+
+            if(health.isAlive == false)
+            {
+                Die();
+            }
+
+            Destroy(collision.gameObject);
+        }
+    }
+
     void Die()
     {
+        Instantiate(deathVFX, transform.position, transform.rotation);
+        AudioSource.PlayClipAtPoint(deathSFX, transform.position, 1f);
         Debug.Log("man im dead...(drone enemy)");
-        Destroy(gameObject, 3);
+        Destroy(gameObject, 0.01f);
     }
 }

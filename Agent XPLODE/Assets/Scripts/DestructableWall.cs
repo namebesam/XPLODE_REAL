@@ -3,8 +3,8 @@ using UnityEngine;
 public class DestructableWall : MonoBehaviour
 {
     public GameObject destroyEffectPrefab;
-    public AudioSource destroySFX;
-  
+    public AudioClip destroySFX; // Change AudioSource to AudioClip
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -17,7 +17,7 @@ public class DestructableWall : MonoBehaviour
         if(collision.gameObject.CompareTag("Rocket"))
         {
             Instantiate(destroyEffectPrefab, transform.position, transform.rotation);
-            destroySFX.Play();
+            AudioSource.PlayClipAtPoint(destroySFX, transform.position, 1f); //has some 3d spatial audio issues that cause quiet falloff
             Destroy(gameObject, 0.1f);
         }
     }

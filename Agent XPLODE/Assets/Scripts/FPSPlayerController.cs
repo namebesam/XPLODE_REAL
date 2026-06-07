@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class FPSPlayerController : MonoBehaviour
 {
@@ -37,7 +38,12 @@ public class FPSPlayerController : MonoBehaviour
     Vector3 moveDirection;
 
     Rigidbody rb;
-    
+
+    private GeneralHealth health;
+    public AudioSource hurtSFX;
+
+    public bool playerLost = false;
+    public TMP_Text healthText;
 
     // Start is called before the first frame update
     private void Start()
@@ -45,6 +51,12 @@ public class FPSPlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         readyToJump = true;
+
+        health = GetComponent<GeneralHealth>();
+        health.isAlive = true;
+
+        //use health value in generalhealth script to inform healthtext
+        healthText.text = health.health.ToString();
     }
 
     private void MyInput()
@@ -184,14 +196,23 @@ public class FPSPlayerController : MonoBehaviour
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
     }
 
-    /* back pocket
-     *     private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer == 10) //what is ground layer
+        if (collision.gameObject.CompareTag("EnemyProjectile"))
         {
+            health.TakeDamage(20); //eventually adjust to custom value on rocket
+            hurtSFX.Play();
 
+            //use health value in generalhealth script to inform healthtext
+            healthText.text = health.health.ToString();
+
+            if (health.isAlive == false)
+            {
+                //die method in LevelManager
+                playerLost = true;
+            }
+
+            Destroy(collision.gameObject);
         }
     }
-     * 
-     */
 }
