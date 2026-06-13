@@ -41,17 +41,17 @@ public class RocketLauncher : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            if (cooldownTimer <= 0 && currentRockets > 0)
+            if (currentRockets <= 0)
+            {
+                outOfRockets = true;
+            }
+            else if (cooldownTimer <= 0)
             {
                 FireRocket();
                 cooldownTimer = rocketCooldown;
             }
-
-            if(currentRockets <= 0)
-            {
-                outOfRockets = true;
-            }
         }
+
         cooldownTimer -= Time.deltaTime;
     }
 

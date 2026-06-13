@@ -4,6 +4,12 @@ public class targetBehavior : MonoBehaviour
 {
     public bool isTargetDead = false;
 
+    void Start()
+    {
+        isTargetDead = false;
+    }
+    
+
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.CompareTag("Rocket"))
