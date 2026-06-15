@@ -20,6 +20,9 @@ public class MainMenuBehavior : MonoBehaviour
         settingsMenu.SetActive(false);
 
         UpdatePlaytimeText(); //Updates clock with every new session (less performance intensive)
+
+        Cursor.lockState = CursorLockMode.None; //unlocks cursor (huge for when returning from pause or going to end screen)
+        Cursor.visible = true;
     }
 
     //debugging
@@ -82,6 +85,12 @@ public class MainMenuBehavior : MonoBehaviour
         //load next scene in scenelist which is level 1
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         SceneManager.LoadScene(nextSceneIndex);
+    }
+
+    public void MainMenuGame()
+    {
+        //loads first scene in index which should always be main menu
+        SceneManager.LoadScene(0);
     }
 
     public void QuitGame()
