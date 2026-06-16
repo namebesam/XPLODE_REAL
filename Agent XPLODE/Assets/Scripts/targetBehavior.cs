@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class targetBehavior : MonoBehaviour
+public class TargetBehavior : MonoBehaviour
 {
     public bool isTargetDead = false;
 
@@ -9,6 +9,10 @@ public class targetBehavior : MonoBehaviour
         isTargetDead = false;
     }
     
+    public void Die()
+    {
+        isTargetDead = true;
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
