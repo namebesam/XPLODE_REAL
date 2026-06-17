@@ -9,14 +9,14 @@ public class LevelManager : MonoBehaviour
 
     // Declare here at class level, not inside Start()
     private FPSPlayerController fpsController;
-    private targetBehavior targetBehave;
+    private TargetBehavior targetBehavior;
     private RocketLauncher rocketLauncherScript;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         fpsController = player.GetComponent<FPSPlayerController>();
-        targetBehave = target.GetComponent<targetBehavior>();
+        targetBehavior = target.GetComponent<TargetBehavior>();
         rocketLauncherScript = player.GetComponent<RocketLauncher>();
     }
 
@@ -33,7 +33,7 @@ public class LevelManager : MonoBehaviour
             LevelLost();
         }
 
-        if (targetBehave.isTargetDead)
+        if (targetBehavior.isTargetDead)
         {
             LevelBeat();
         }

@@ -100,6 +100,17 @@ public class RocketBehavior : MonoBehaviour
                 int dmg = SplashDamage(rb.transform);
                 script.TakeDamage(dmg);
             }
+        } else if (rb.CompareTag("Target"))
+        {
+            TargetBehavior targ = rb.GetComponent<TargetBehavior>();
+            if (targ)
+            {
+                targ.Die();
+            }
+        } else if (rb.CompareTag("Civilian"))
+        {
+            LevelManager manager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+            manager.LevelLost();
         }
     }
 

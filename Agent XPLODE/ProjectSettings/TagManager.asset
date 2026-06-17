@@ -8,6 +8,8 @@ TagManager:
   - Rocket
   - Enemy
   - EnemyProjectile
+  - Target
+  - Civilian
   layers:
   - Default
   - TransparentFX

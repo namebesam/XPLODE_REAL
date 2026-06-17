@@ -273,6 +273,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifetime: 5
+  rocketDamage: 200
   explosionEffect: {fileID: 2612404059399816833, guid: 29790b7c4dcdaa449883253b3f179065, type: 3}
   explosionHitSFX: {fileID: 8300000, guid: a4f6170476b91214eb25d99a799598f5, type: 3}
   explosionForce: 20
