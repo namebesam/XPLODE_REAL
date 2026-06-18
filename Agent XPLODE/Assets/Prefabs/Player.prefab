@@ -238,7 +238,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.7
+  m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -789,6 +789,9 @@ MonoBehaviour:
   jumpKey: 32
   maxSlopeAngle: 90
   playerHeight: 2
+  hurtSFX: {fileID: 0}
+  playerLost: 0
+  healthText: {fileID: 0}
 --- !u!114 &736100326643170922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -808,6 +811,11 @@ MonoBehaviour:
   rocketCooldown: 0.8
   rocketRecoilAnim: {fileID: 1220344129090215657}
   muzzleExplosionPrefab: {fileID: 7789759112137344800, guid: 5eb338ebd42dac040879b0e84d514368, type: 3}
+  rocketLaunchSFX: {fileID: 0}
+  startingRockets: 25
+  currentRockets: 0
+  outOfRockets: 0
+  rocketText: {fileID: 0}
 --- !u!114 &7420454732433710118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -908,6 +916,7 @@ MonoBehaviour:
   startTransform: {fileID: 539987637562358784}
   modelTransform: {fileID: 8253440674025892701}
   holderTransform: {fileID: 6144592083988387379}
+  playerTransform: {fileID: 6497730658087065754}
   lengthFromStart: 1.66
   maxPushBackDistance: 1.1
   speed: 4
