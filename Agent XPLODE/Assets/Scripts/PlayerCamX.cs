@@ -21,6 +21,13 @@ public class PlayerCamX : MonoBehaviour
         
         xRotation = transform.eulerAngles.x;
         yRotation = transform.eulerAngles.y;
+
+        SettingsHolder settingsHolder = FindAnyObjectByType<SettingsHolder>();
+        if (settingsHolder)
+        {
+            sensX = settingsHolder.playerSens;
+            sensY = settingsHolder.playerSens;
+        }
     }
 
     // Update is called once per frame
