@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody), typeof(GeneralHealth))]
@@ -20,9 +19,10 @@ public class DroneEnemyBehavior : MonoBehaviour
     public Vector3 surveyPosition2;
 
     [Header("Attack Settings")]
-    public float detectiopRange = 10f;
+    public float detectionRange = 10f;
     public float followRange = 5f;
     public float escapeRange = 20f;
+    public bool useRaycastSightCheck = true;
     public float fireRate = 1f;
     public float bulletForce = 750f;
     public GameObject projectilePrefab;
@@ -88,15 +88,40 @@ public class DroneEnemyBehavior : MonoBehaviour
 
     void CheckForPlayer()
     {
-        Collider[] potentials = Physics.OverlapSphere(transform.position, detectiopRange);
+        Collider[] potentials = Physics.OverlapSphere(transform.position, detectionRange);
         foreach (Collider potential in potentials)
         {
             if (potential.CompareTag("Player"))
             {
-                target = potential.transform;
-                state = DroneState.Hunting;
+                bool obstructed = IsLineOfSightObstructed(potential.transform.position);
+                if (!obstructed)
+                {
+                    target = potential.transform;
+                    state = DroneState.Hunting;
+                }
             }
         }
+    }
+    
+    bool IsLineOfSightObstructed(Vector3 targetPos)
+    {
+        if (!useRaycastSightCheck)
+        {
+            return false;
+        }
+        Vector3 direction = targetPos - transform.position;
+        RaycastHit[] hits = Physics.RaycastAll(transform.position, direction,
+            direction.magnitude);
+        foreach (RaycastHit hitInfo in hits)
+        {
+            if (!hitInfo.collider.CompareTag("Enemy")
+                && !hitInfo.collider.CompareTag("Player"))
+            {
+                // Debug.Log("Enemy raycast: " + hitInfo.collider.name);
+                return true;
+            }
+        }
+        return false;
     }
 
     void DoRoamIfPossible()
@@ -106,9 +131,11 @@ public class DroneEnemyBehavior : MonoBehaviour
             Vector3 directionTo = GetDirectionTo(roamTargetPosition);
             if (IsLookingInDirection(directionTo))
             {
+                // Debug.Log("Enemy: add force" + directionTo.x + ", " + directionTo.z);
                 AddForceInDirection(directionTo, movementForce);
             }
             LookInDirectionSmoothly(directionTo);
+            // transform.localRotation = Quaternion.LookRotation(directionTo);
 
             float distanceTo = Vector3.Distance(roamTargetPosition, transform.position);
             if (distanceTo <= 0.05)
@@ -147,9 +174,10 @@ public class DroneEnemyBehavior : MonoBehaviour
 
     private bool IsLookingInDirection(Vector3 dir)
     {
-        Quaternion lookRot = Quaternion.LookRotation(dir);
-        float difference = Vector3.Distance(lookRot.eulerAngles, transform.rotation.eulerAngles);
-        if (difference >= 10)
+        // Quaternion lookRot = Quaternion.LookRotation(dir);
+        // float difference = Vector3.Distance(lookRot.eulerAngles, transform.rotation.eulerAngles);
+        float difference = Vector3.Angle(dir, transform.forward);
+        if (difference >= 10f)
         {
             return false;
         }
@@ -161,7 +189,7 @@ public class DroneEnemyBehavior : MonoBehaviour
         Vector3 targetPos = target.position;
         float distanceTo = Vector3.Distance(targetPos, transform.position);
 
-        if (distanceTo <= escapeRange)
+        if (distanceTo <= escapeRange && !IsLineOfSightObstructed(target.position))
         {
             Vector3 targetDir = GetDirectionTo(targetPos);
             LookInDirectionSmoothly(targetDir);
