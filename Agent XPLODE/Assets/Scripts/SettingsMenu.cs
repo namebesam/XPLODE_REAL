@@ -7,6 +7,8 @@ public class SettingsMenu : MonoBehaviour
     public AudioMixer audioMixer;
     float minVolume = -80f; // assumed is same as min value of ui slider
     float maxVolume = 0f; // assumed is same as max value of ui slider
+    
+    public SettingsHolder settingsHolderPrefab;
 
     public void SetVolume(float volume)
     {
@@ -31,8 +33,14 @@ public class SettingsMenu : MonoBehaviour
         Screen.fullScreen = isFullscreen;
     }
 
-    public void changeSens() //placeholder for sensitivity change code
+    public void SetSens(float sens)
     {
-
+        SettingsHolder settingsHolder = FindAnyObjectByType<SettingsHolder>();
+        if (!settingsHolder)
+        {
+            settingsHolder = Instantiate(settingsHolderPrefab);
+        }
+        DontDestroyOnLoad(settingsHolder);
+        settingsHolder.playerSens = sens;
     }
 }
