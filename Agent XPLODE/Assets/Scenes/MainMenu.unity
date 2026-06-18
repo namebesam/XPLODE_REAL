@@ -42826,7 +42826,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Arslan Ayushin - Lead Programmer [Level Manager, Anims] Version Control
+  m_text: Arslan Ayushin - Lead Programmer [Rocket Behavior, Anims] Version Control
     Lead
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1364a14b38d4d0b48a04961937c6ed2b, type: 2}
