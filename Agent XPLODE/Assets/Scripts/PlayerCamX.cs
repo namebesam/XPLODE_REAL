@@ -18,6 +18,9 @@ public class PlayerCamX : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked; //locks cursor in middle of screen and makes invisible
         Cursor.visible = false;
+        
+        xRotation = transform.eulerAngles.x;
+        yRotation = transform.eulerAngles.y;
     }
 
     // Update is called once per frame
