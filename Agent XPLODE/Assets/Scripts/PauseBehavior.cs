@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class PauseBehavior : MonoBehaviour
 {
-    public bool isGamePaued = false;
+    public bool isGamePaused = false;
     public GameObject pauseMenu;
     
 
@@ -17,9 +17,9 @@ public class PauseBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.M))
         {
-            if(isGamePaued)
+            if(isGamePaused)
             {
                 //resumes the game
                 ResumeGame();
@@ -36,7 +36,7 @@ public class PauseBehavior : MonoBehaviour
     public void PauseGame()
     {
         pauseMenu.SetActive(true);
-        isGamePaued = true;
+        isGamePaused = true;
         GameTimer.SavePlaytime(); //saves total playtime to gametimer singleton on pause
         Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None; // unlocks cursor so UI is clickable
@@ -46,7 +46,7 @@ public class PauseBehavior : MonoBehaviour
     public void ResumeGame()
     {
         pauseMenu.SetActive(false);
-        isGamePaued = false;
+        isGamePaused = false;
         Time.timeScale = 1.0f;
         Cursor.lockState = CursorLockMode.Locked; // re-locks cursor for gameplay
         Cursor.visible = false;

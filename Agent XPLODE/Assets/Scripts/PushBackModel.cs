@@ -70,7 +70,7 @@ public class PushBackModel : MonoBehaviour
         bool hit = Physics.Raycast(startPos, direction, out hitInfo, direction.magnitude);
         if (hit)
         {
-            Debug.Log("RPG is inside wall " + hitInfo.collider.name);
+            // Debug.Log("RPG is inside wall " + hitInfo.collider.name);
             return true;
         }
         return false;

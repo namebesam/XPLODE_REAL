@@ -23,19 +23,23 @@ public class PlayerCamX : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //get mouse input
-        float mouseX = Input.GetAxisRaw("Mouse X") * sensX;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * sensY;
+        PauseBehavior pauseBehavior = GameObject.FindAnyObjectByType<PauseBehavior>();
+        if (!pauseBehavior.isGamePaused)
+        {
+            //get mouse input
+            float mouseX = Input.GetAxisRaw("Mouse X") * sensX;
+            float mouseY = Input.GetAxisRaw("Mouse Y") * sensY;
 
-        yRotation += mouseX;
+            yRotation += mouseX;
 
-        xRotation -= mouseY;
+            xRotation -= mouseY;
 
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        // rotate cam and orientation
-        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-        orientation.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-        playerObj.rotation = Quaternion.Euler(0, yRotation, 0);
+            // rotate cam and orientation
+            transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+            orientation.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+            playerObj.rotation = Quaternion.Euler(0, yRotation, 0);
+        }
     }
 }

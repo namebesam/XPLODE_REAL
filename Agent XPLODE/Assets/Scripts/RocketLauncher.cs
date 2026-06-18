@@ -39,7 +39,8 @@ public class RocketLauncher : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        PauseBehavior pauseBehavior = GameObject.FindAnyObjectByType<PauseBehavior>();
+        if (Input.GetButtonDown("Fire1") && !pauseBehavior.isGamePaused)
         {
             if (currentRockets <= 0)
             {
