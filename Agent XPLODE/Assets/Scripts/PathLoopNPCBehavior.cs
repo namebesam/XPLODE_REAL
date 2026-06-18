@@ -34,7 +34,11 @@ public class PathLoopNPCBehavior : MonoBehaviour
             agent.SetDestination(GetNextPosition());
 
             while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
+            {
+                // Debug.Log("Agent: " + agent.pathPending + " dist: " + agent.remainingDistance
+                //     + " " + agent.stoppingDistance);
                 yield return null;
+            }
 
             // Debug.Log("Stopping to wait");
             agent.isStopped = true;

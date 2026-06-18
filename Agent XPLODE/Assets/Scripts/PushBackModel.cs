@@ -5,6 +5,7 @@ public class PushBackModel : MonoBehaviour
     public Transform startTransform; // where the raycast should start from
     public Transform modelTransform; // smoothly moves model
     public Transform holderTransform; // instantly moves fire point/holder
+    public Transform playerTransform;
     public float lengthFromStart = 1.66f;
     public float maxPushBackDistance = 1.1f;
     public float speed = 4f;
@@ -27,19 +28,28 @@ public class PushBackModel : MonoBehaviour
     {
         Vector3 startPos = startTransform.position;
         Vector3 startOffset = startTransform.localPosition;
-        RaycastHit hitInfo;
-        bool hit = Physics.Raycast(startPos, startTransform.forward, out hitInfo, lengthFromStart);
-        if (hit)
+
+        if (CheckIsInsideWall())
         {
-            // Debug.Log("Model: collides with " + hitInfo.collider.name);
-            float pushDistance = Mathf.Min(lengthFromStart - hitInfo.distance, maxPushBackDistance);
-            // Debug.Log("Pushback: Hit: " + pushDistance);
-            goalOffset = startOffset + Vector3.forward * -pushDistance;
+            // rocket launcher clipping through wall
+            goalOffset = startOffset + Vector3.forward * -maxPushBackDistance;
         }
         else
         {
-            // Debug.Log("Pushback: NoHit");
-            goalOffset = startOffset;
+            RaycastHit hitInfo;
+            bool hit = Physics.Raycast(startPos, startTransform.forward, out hitInfo, lengthFromStart);
+            if (hit)
+            {
+                // Debug.Log("Model: collides with " + hitInfo.collider.name);
+                float pushDistance = Mathf.Min(lengthFromStart - hitInfo.distance, maxPushBackDistance);
+                // Debug.Log("Pushback: Hit: " + pushDistance);
+                goalOffset = startOffset + Vector3.forward * -pushDistance;
+            }
+            else
+            {
+                // Debug.Log("Pushback: NoHit");
+                goalOffset = startOffset;
+            }    
         }
 
         holderTransform.localPosition = goalOffset;
@@ -49,5 +59,20 @@ public class PushBackModel : MonoBehaviour
         // Debug.Log("Pushback: goalOffset = " + goalOffset + " transform = " + holderTransform.localPosition
         //     + " speed = " + speed + " dt = " + Time.deltaTime);
         currentOffset = next;
+    }
+
+    bool CheckIsInsideWall()
+    {
+        // cast ray from player to rocket launcher
+        Vector3 startPos = playerTransform.position;
+        Vector3 direction = startTransform.position - startPos;
+        RaycastHit hitInfo;
+        bool hit = Physics.Raycast(startPos, direction, out hitInfo, direction.magnitude);
+        if (hit)
+        {
+            // Debug.Log("RPG is inside wall " + hitInfo.collider.name);
+            return true;
+        }
+        return false;
     }
 }
