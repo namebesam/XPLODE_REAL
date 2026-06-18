@@ -28,15 +28,19 @@ public class PathLoopNPCBehavior : MonoBehaviour
     {
         while (true)
         {
-            // Debug.Log("Walking to next pos");
+            Debug.Log("Walking to next pos");
             agent.isStopped = false;
             anim.SetBool("isWalking", true);
             agent.SetDestination(GetNextPosition());
 
             while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
+            {
+                // Debug.Log("Agent: " + agent.pathPending + " dist: " + agent.remainingDistance
+                //     + " " + agent.stoppingDistance);
                 yield return null;
+            }
 
-            // Debug.Log("Stopping to wait");
+            Debug.Log("Stopping to wait");
             agent.isStopped = true;
             anim.SetBool("isWalking", false);
             yield return new WaitForSeconds(5);
